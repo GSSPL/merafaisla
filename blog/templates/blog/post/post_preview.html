@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+
+{%block description%}{{post.seo_description}}{%endblock%}
+
+{%block title%}{{post.seo_title}}{%endblock%}
+
+{%block content%}
+<div  class="row>">
+	<div class="col-md-8">
+	<div class="alert alert-danger" role="alert">This is a post preview</div>
+	<div class="page-header">
+		<h1>{{post.title}}</h1>
+	</div>
+		<small>Written by : {{post.author}} on {{post.published}} in <a href="{{ posts.category.get_absolute_url}}">{{post.category}}</a></small>
+		<hr>
+		{{post.content|linebreaks}}
+		<div class="page-header">
+		<h1>Comments<small> Number of comments : {{ post.comments.count }}</small></h1>
+	</div>
+		
+		<p class="text-center"><button type="button" class="btn btn-defualt"><a href="{% url 'blog:add_comment' slug=post.slug %}">Leave a comment</a></button></p>		
+		{% for comment in post.comments.all%}
+		<div class="panel panel-default">
+		<div class="panel-heading"> By {{ comment.user }} on {{ comment.created }} </div>
+		<div class="panel-body">{{ comment.body }}</div>
+			</div>
+		{%empty%}
+			<p>There is no comments!</p>	
+		{% endfor %}
+	</div>
+</div>
+{%endblock%}
